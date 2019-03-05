@@ -1,0 +1,24 @@
+<view style="width:100%;height:100%rpx;">
+  <view class="rules_main">
+    <view class="rules_title_top">< < < < < < < <</view>
+    <view class="rules_title">活动规则
+    </view>
+    <view class="rules_content">
+      <text class="bozhehao">< < < < < < < <      
+      </text>
+      <text class="c_one">1.确保您已经关注并认证了汇丰普信财富号，才可参加本次活动并百分之百获得礼品</text>
+      <text>2.同一用户活动每天可签到一次，当日未签到则表示放弃机会，可通过分享活动获取补签机会。</text>
+      <text>3.奖品设有积分，积分更可兑换大奖，以上产品通通抱回家</text>
+      <text>4.活动逾期后，未兑换的积分将回收，奖品发放的数量有限，先兑先得。奖品可在活动页面看到显示。</text>
+      <text class="c_f">5.积分获取：</text>
+      <text class="c_f">基础签到积分：10积分</text>
+      <text class="c_f">基金成立日/公司成立日积分：100积分</text>
+      <text class="c_f">首次签到积分：加赠10积分</text>
+      <text class="c_f">每日分享积分：15积分</text>
+      <view class="finish_v" >
+        <image class="img_finish" onTap="onFinish" src="../../image/ok.png" />
+        <text class="finish" onTap="onFinish">确认</text>
+      </view>
+    </view>
+  </view>
+</view>

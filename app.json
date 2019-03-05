@@ -1,0 +1,14 @@
+{
+  "pages": [
+   
+     "pages/creditsExchange/creditsExchange",
+    "pages/index/index",
+    "pages/calendar/calendar",
+    "pages/rules/rules",
+     "pages/prize/prize"
+    
+  ],
+  "window": {
+    "defaultTitle": "My App"
+  }
+}

@@ -1,0 +1,41 @@
+<import-sjs name="dateImg" from="../calendar/calendar.sjs"/>
+<!-- 打卡日历页面 -->
+<view class='all'>
+  <!-- 显示星期 -->
+  <view class="week_main">
+    <view class="week" a:for="{{weeks_ch}}" a:key="{{index}}" data-idx="{{index}}">{{item}}            
+    </view>
+  </view>
+  <view class="day_main">
+    <view class='days'>
+      <!-- 列 -->
+      <view class="columns" a:for="{{days.length/7}}" a:for-index="i" a:key="i">
+        <view a:for="{{days}}" a:for-index="j" a:key="j">
+          <!-- 行 -->
+          <view class="rows" a:if="{{j/7 == i}}">
+            <view class="rows" a:for="{{7}}" a:for-index="k" a:key="k">
+              <!-- 每个月份的空的单元格 -->
+              <view class='cell' style="height: {{modelHeight}}rpx;" a:if="{{days[j+k].date == null}}">
+                <text decode="{{true}}">
+                </text>
+              </view>
+              <!-- 每个月份的有数字的单元格 -->
+              <view class='cell' style="height: {{modelHeight}}rpx;" a:else>
+                <!-- 特殊签到 -->
+                <view  onTap="onNotSignin" data-clickdate="{{days[j+k].date}}" data-signtype="{{days[j+k].type}}" class='cell'>
+                  <image src="{{dateImg.typeColor(days[j+k].type)}}" class="dateImg" />
+                  <text class="cell_text">{{days[j+k].date}}                                                      
+                  </text>
+                  
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 坚持打卡天数 -->
+  <!-- <view class='count'><text>截至目前，你已坚持打卡</text><view class='daynumber'><text class='number'>{{count}}</text><text class='day'>天</text></view><text>请再接再厉，继续努力</text></view> -->
+</view>
+<!-- <view class="bar"><view class="previous" onTap="handleCalendar" data-handle="prev"><text>shang</text></view><view class="date">{{cur_year || ""}} 年 {{cur_month || ""}} 月</view><view class="next" onTap="handleCalendar" data-handle="next"><text>xia</text></view></view> -->

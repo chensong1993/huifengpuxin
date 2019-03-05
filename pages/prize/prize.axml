@@ -1,0 +1,32 @@
+<view class="prize_main" a:if="{{noPrize==-1}}">
+  <text class="go_back_no" style="bottom: {{goBackNo}}rpx" onTap="onGoBack">
+  </text>
+  <button class="share" style="bottom: {{shareBottom}}rpx" open-type="share">
+  </button>
+  <image class="no_proze_img" src="../../image/no_prize.png" />
+</view>
+<view class="prize_main" a:else>
+  <image class="is_proze_img" src="../../image/is_prize.png" />
+  <view class="przie_main_content">
+    <view class="prize_list_main" style=" top: {{prizeListTop}}rpx;">
+      <scroll-view class="scroll_view" style="height: {{xScrollViewHeight}}rpx;" scroll-y="{{true}}" onScrollToUpper="upper" onScrollToLower="lower" onScroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block a:for="{{6}}">
+          <view class="prize_list">
+            <view class="prize_list_content">
+              <text class="prize_state">已使用                                                                              
+              </text>
+              <text class="prize_content">话费券话费券话费券话费券话费券话费券                                                                              
+              </text>
+              <text class="prize_date">获取时间：2019.09.12                                                                              
+              </text>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<text class="go_back_is" style="bottom: {{goBackIs}}rpx" onTap="onGoBack">
+</text>
+<!-- <-->
+</view>

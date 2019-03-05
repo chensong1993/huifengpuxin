@@ -1,0 +1,150 @@
+
+<view class="activity_rule_mian" a:if="{{activityRule==1}}">
+  <text class="activity_rule_text" onTap="activityRuleFinish" style="bottom:{{activityRuleBottom}}rpx">
+  </text>
+  <image class="activity_rule" src="../../image/activity_rule.png" />
+</view>
+
+  <view class="main"  a:if="{{activityRule==-1}}">
+    <image class="background_img" src="../../image/background_date.png" />
+    <view class="mian_content">
+      <view class="integral_plate">
+        <image class="integralplate_img" src="../../image/integral_plate.png" />
+        <text class="integralplate_text">1245        
+        </text>
+      </view>
+      <view class="rule" style="top:{{ruleXHeight}}rpx;" onTap="onRule">
+        <image class="img_rule" src="../../image/activity_05.png" />
+        <!-- <text class="text_rule"> 活动规则                                                                                        
+      </text> -->
+      </view>
+      <view class="click_sign" style="bottom:{{signXHeight}}rpx;" a:if="{{SignOk==false}}">
+        <text class="click_sign_text" onTap="onSignIn">点击签到                                                                                                                
+        </text>
+      </view>
+      <view class="click_sign" style="bottom:{{signXHeight}}rpx;" a:else>
+        <text class="click_is_sign_text">今日已签到                                                                                                                
+        </text>
+      </view>
+      <view class="prize" style="bottom:{{prizeXHeight}}rpx;" onTap="onPrizeQuery">
+        <image class="img_prize" src="../../image/pirze_03.png" />
+        <!-- <text class="text_prize">奖品查询                                                                                         
+      </text> -->
+      </view>
+      <view class="exchange" style="bottom:{{prizeXHeight}}rpx;" onTap="oncreditsExchange">
+        <image class="img_exchange" src="../../image/integral_05.png" />
+        <!-- <text class="text_exchange">积分兑换                                                                                         
+      </text> -->
+      </view>
+      <view class="logo">
+        <image class="img_logo" src="../../image/icon_03.png" />
+      
+      </view>
+      <!-- 签到提醒 -->
+      <view class="tip_main" a:if="{{tipShow==1}}" style="top:{{tipTop}}rpx">
+        <image class="tip_img_b" src="../../image/signIn_remind.png" />
+        <view class="tip">
+          <view class="tip_title">
+            <!-- <text class="tip_left">签到积分:                                                                                                                                                      
+          </text> -->
+            <text class="tip_right">积分+20                                                                                                                                                                            
+            </text>
+          </view>
+          <view class="tip_rule">分享可得5积分                                                                                                                                          
+          </view>
+          <!-- <view class="tip_rule_b">> > > > > > > ></view><view class="caifu">《汇丰晋信财富号》                                                                                                                
+        </view><view class="caifu_d">实例解读，为您洞见先机。                                                                                                                
+        </view> -->
+        </view>
+        <view class="tip_home" onTap="onGoHome">
+          <image class="img_home" src="../../image/go_home.png" />
+          <!-- <text class="text_home">去主页                                                                                                                                            
+          </text> -->
+        </view>
+        <view class="tip_share">
+          <button open-type="share" class="text_share">
+          </button>
+          <image class="img_share" src="../../image/go_share.png" />
+          <!-- <text class="text_share">去分享                                                                      
+          </text> -->
+        </view>
+      </view>
+      <!-- 提示积分分享关闭按钮 -->
+      <image class="tip_close" a:if="{{tipShow==1}}" style="bottom:{{tipCloseBottom}}rpx" onTap="onTipClose" src="../../image/close_tip.png"/>
+      <!-- 积分兑换成功提醒 -->
+      <view class="integral_success" a:if="{{isIntegral !=1}}">
+        <view class="integral_ok">积分兑换成功!                                                                    
+        </view>
+        <view class="share_integral">分享活动，获得更多积分                                                                    
+        </view>
+        <view class="finish_v_err">
+          <image class="img_finish" onTap="onFinish" src="../../image/ok.png" />
+          <text class="finish" onTap="onFinish">确认                                                                                            
+          </text>
+        </view>
+      </view>
+      <!-- 积分兑换失败提醒 -->
+      <view class="integral_main_err" a:if="{{isIntegral!=1}}">
+        <view class="integral_err">积分兑换失败!                                                                    
+        </view>
+        <view class="integral_text">请攒够后再来开启                                
+        </view>
+        <view class="share_integral_err">分享活动，获得更多积分                                                                    
+        </view>
+        <view class="finish_v_err">
+          <image class="img_finish" onTap="onFinish" src="../../image/ok.png" />
+          <text class="finish" onTap="onFinish">确认                                                                                            
+          </text>
+        </view>
+      </view>
+      <!-- 输入手机号提醒 -->
+      <view class="integral_main_err" a:if="{{phoneShow==1}}">
+        <view a:if="{{tipShow>0}}">
+          <view class="integral_err">请输入领奖手机号                                                                              
+          </view>
+          <input class="integral_number" type="number" />
+        </view>
+        <view a:else>
+          <view class="integral_err">领取成功                                                                              
+          </view>
+        </view>
+        <view class="finish_v_err">
+          <image class="img_finish" onTap="onFinish" src="../../image/ok.png" />
+          <text class="finish" onTap="onFinish">确认                                                                                            
+          </text>
+        </view>
+      </view>
+    </view>
+    <!-- 日历节点 -->
+    <view class="swiper_signin" style="top: {{phoneTop}}rpx;">
+      <view class="main_sgin">
+        <view class="calendar">
+          <view class="sign_in">
+            <image class="sign_img" src="../../image/duihao.png" />
+            <text class="sign_day">已连续签到{{signTotalDay}}日                                                                                                                                                                                                                                                                                                
+            </text>
+          </view>
+          <view class="sign_year">
+            <image class="date_img" src="../../image/duihao_07.png" />
+            <!-- <text class="dian"></text><text class="line"></text> -->
+            <text class="year">{{cur_year||"--"}}年{{cur_month||"--"}}月                                                                                                                                                                                                                                                                               
+            </text>
+          </view>
+          <swiper class="swiper_signins" indicator-dots="{{indicatorDots}}" acceleration="true" autoplay="{{autoplay}}" current="{{currindex}}" interval="{{1000}}" onChange="intervalChange" data-handle="prev" duration="{{duration}}">
+            <block a:for="{{activityList}}">
+              <swiper-item>
+                <view class="main_sgin">
+                  <include src="../calendar/calendar.axml" />
+                </view>
+                <!-- <block a:for="{{30}}" a:key=""><view class="calendar_day">{{index+1}}                                                                                                                                                                                                               
+              </view></block> -->
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+      </view>
+    </view>
+    <!-- 日历节点 -->
+  </view>
+  <!-- 提示蒙层 -->
+  <view class="tip_zz" a:if="{{tipShow==1}}"/>
