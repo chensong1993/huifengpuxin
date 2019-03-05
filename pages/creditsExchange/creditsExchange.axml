@@ -2,27 +2,69 @@
 <view class="prize_main">
   <image class="redeem_prize_img" src="../../image/redeem_prize.png" />
   <view class="przie_main_content">
+       <!-- 积分s是否兑换提醒 -->
+    <view class="integral_success" style=" top: {{xRedeemTop}}rpx;" a:if="{{condition}}">
+      <image class="redeem_ok_img" src="../../image/is_redeem.png"  />
+     
+      <view class="isRedeem_finish" onTap="onisRedeem">
+        <text class="is_finish_text"></text>  
+      </view>
+      <image src="../../image/close_tip.png" class="redeem_off" /> 
+    </view>
+      <!-- 积分兑换成功提醒 -->
+    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
+      <image class="redeem_ok_img" src="../../image/redeem_ok.png"  />
+      
+      <button class="share_integral" open-type="share">                                                                                  
+      </button>
+      <view class="finish" onTap="onFinish">
+        <text class="finish_text"></text>  
+      </view>
+    </view>
+    <!-- 积分兑换失败提醒 -->
+    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
+      <image class="redeem_ok_img" src="../../image/redeem_err.png"  />
+      
+      <button class="share_integral_err" open-type="share">                                                                                  
+      </button>
+      <view class="finish" onTap="onFinish">
+        <text class="finish_text"></text>  
+      </view>
+    </view>
+    <!-- 输入手机号提醒 -->
+    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
+      <image class="redeem_ok_img" src="../../image/phone_number.png"  />
+      
+      <input class="phone_content" type="number" maxlength="11" focus='true'>                                                                              
+      </input>
+      <view class="phone_finish" onTap="onSubmitPhoneNum">
+        <text class="phone_finish_text"></text>  
+      </view>
+    </view>
+    <text class="available_integral" style="top: {{availableIntegral}}rpx;">12345</text>
     <view class="prize_list_main" style=" top: {{prizeListTop}}rpx;">
       <scroll-view class="scroll_view" style="height: {{xScrollViewHeight}}rpx;" scroll-y="{{true}}" onScrollToUpper="upper" onScrollToLower="lower" onScroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block a:for="{{6}}">
-          <view class="prize_list">
-            <view class="prize_list_content">
-              <text class="prize_state">已使用                                                                              
-              </text>
-              <text class="prize_content">话费券话费券话费券话费券话费券话费券                                                                              
-              </text>
-              <text class="prize_date">获取时间：2019.09.12                                                                              
-              </text>
-              <text class="is_exchange">兑换</text>
-            </view>
+          <view class="prize_list_content">
+            <text class="prize_state">剩余{{100}}份                                                                                                          
+            </text>
+            <text class="prize_content">话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费  话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费  话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费                                                                                                      
+            </text>
+            <text class="need_points">需要积分：{{100000000000}}
+            </text>
+            <text class="prize_date">获取时间：2019.09.12                                                                                                          
+            </text>
             
+            <text class="is_exchange">兑换              
+            </text>
           </view>
         </block>
       </scroll-view>
     </view>
   </view>
-    <view class="go_back" onTap="onGoBack">
-    </view>
+  <view class="go_back" style="bottom: {{GoBack}}rpx;" onTap="onGoBack">
   </view>
 </view>
 </view>
+</view>
+<view class="barrier_bed"></view>

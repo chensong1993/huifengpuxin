@@ -6,15 +6,11 @@ Page({
     indicatorDots: false,
     autoplay: false,
     duration: 500,
-    tipShow: -1,
-    isIntegral:0,
-    isIntegral:1,
-    phoneShow:-1,
     days: [],
     cur_year: 0,
     cur_month: 0,
     count: 0,
-    activityRule:-1
+    activityRule: -1
   },
   onLoad(e) {
     var that = this;
@@ -27,10 +23,11 @@ Page({
             modelHeight: '75',
             signXHeight: '45',
             prizeXHeight: '140',
-            ruleXHeight:'-110',
-            tipTop:'75',
-            tipCloseBottom:'215',
-            activityRuleBottom:'200'
+            ruleXHeight: '-110',
+            tipTop: '75',
+            tipCloseBottom: '215',
+            activityRuleBottom: '200',
+            specialXTop: '385'
           })
         }
         console.log(res.model);
@@ -58,7 +55,7 @@ Page({
     })
 
     my.httpRequest({
-      url: app.signInUrl + 'm=huifeng&c=index&a=load_init&userid=chen123', // 获取活动时间
+      url: app.signInUrl + 'm=huifeng&c=index&a=load_init&userid=' + app.userId, // 获取活动时间
       method: 'GET',
       success: (res) => {
         that.data.currentDate = res.data.data.currtime;
@@ -69,6 +66,10 @@ Page({
 
 
 
+  },
+  //特殊日签到成功提醒
+  onSpecialDayShow() {
+    specialdayShow: -1
   },
   //补签
   onNotSignin(e) {
@@ -86,12 +87,12 @@ Page({
     // })
 
     //系统时间
-    var systemtime = Date.parse(that.data.dates);
-
-    var currentTime = Date.parse(that.data.currentTime + "-" + day);
+    var systemtime = Date.parse(that.data.dbCurrtime);
+    day = (day < 10 ? "0" : "") + day
+    var currentTime = Date.parse(that.data.currentTimeZero + "-" + day);
     var starttime = Date.parse(that.data.startTime);
     var endtime = Date.parse(that.data.endTime);
-    console.log(starttime + "   " + currentTime);
+    console.log(that.data.currentTimeZero + "-" + day + "   " + that.data.dates);
     console.log(signtype);
     switch (signtype) {
       case 0:
@@ -109,9 +110,16 @@ Page({
             content: "ok"
           })
         } else {
-          my.showToast({
-            content: "请补签小于当前日期"
-          })
+          if (currentTime == systemtime) {
+            my.showToast({
+              content: "不能补签当天"
+            })
+          } else {
+            my.showToast({
+              content: "不能补签未来"
+            })
+          }
+
           //   }
           // }
 
@@ -192,7 +200,7 @@ Page({
     }
 
     my.httpRequest({
-      url: app.signInUrl + 'm=huifeng&c=index&a=load_init&userid=chen123', // 获取活动时间
+      url: app.signInUrl + 'm=huifeng&c=index&a=load_init&userid=' + app.userId, // 获取活动时间
       method: 'GET',
       success: (res) => {
         var time = res.data.data;
@@ -203,6 +211,7 @@ Page({
         endtimeM = parseInt(endtimeM);
         var lists = [];
         var activity = endtimeM - starttimeM + 1;
+        that.data.dbCurrtime = time.currtime;
         that.setData({
           activityList: activity
         })
@@ -240,8 +249,11 @@ Page({
 
     var currentTime = year + "-" + month;
     that.data.currentyear = year;
-
     that.data.currentmonth = month;
+    
+    //补签时间引用
+    var currentTimeZero = year + "-" + (month < 10 ? "0" : "") + month;
+    that.data.currentTimeZero = currentTimeZero;
     console.log(currentTime + "666666");
     that.data.currentTime = currentTime;
     // let res = my.getStorageSync({
@@ -258,10 +270,14 @@ Page({
       content: '加载中...',
     });
     my.httpRequest({
-      url: app.signInUrl + 'm=huifeng&c=index&a=index&userid=chen123&time=' + currentTime, // 签到列表
+      url: app.signInUrl + 'm=huifeng&c=index&a=index&userid=' + app.userId + '&time=' + currentTime, // 签到列表
       method: 'GET',
       success: (res) => {
         signList = res.data.data;
+        //积分
+        that.setData({
+          score:signList.score
+        })
         // lists= res.data.data.date;
         current = new Date(signList.date.replace(/-/g, "/"));
         year = current.getFullYear();
@@ -302,7 +318,7 @@ Page({
               type: 4
             }
             console.log("444");
-            //  siginin.push(obj);
+              siginin.push(obj);
           }
           if (lists[k].type == "3") {
             obj = {
@@ -310,29 +326,36 @@ Page({
               type: 3
             }
             console.log("33333");
-            //  siginin.push(obj);
+              siginin.push(obj);
           }
           if (lists[k].type == "2") {
             obj = {
               signList: lists[k].time,
               type: 2
             }
+            siginin.push(obj);
             console.log("2222");
           }
-          siginin.push(obj);
+          
+         
         }
-
+         
+        console.log(year+'   '+that.data.cur_year+'  '+month+  +that.data.cur_month);
         if (year == that.data.cur_year && month == that.data.cur_month) {
-          for (var i = 0; i < siginin.length; i++) {
-            for (var j = 0; j < daysArr.length; j++) {
+
+          for (var j = 0; j < daysArr.length; j++) {
+            for (var i = 0; i < siginin.length; i++) {
               if (daysArr[j].date == siginin[i].signList) {
-                console.log(siginin[i].type);
+                console.log( siginin[i].signList+"  0000000");
                 daysArr[j].type = siginin[i].type;
                 my.hideLoading();
+              
               }
-
+ //console.log(siginin[i].type);
             }
+            console.log(daysArr[j].date);
           }
+          
           that.setData({
             days: daysArr
           });
@@ -343,7 +366,7 @@ Page({
           //     days: daysArr
           //   }
           // });
-          console.log(daysArr);
+          console.log("daysArr");
         }
       },
       fail() {
@@ -353,9 +376,9 @@ Page({
     //  }
     //});
 
-    // setTimeout(function () {
-    //   my.hideLoading();
-    // }, 5000)
+    setTimeout(function () {
+      my.hideLoading();
+    }, 2000)
 
   },
   // 绘制当月天数占的格子，并把它放到days数组中
@@ -398,7 +421,7 @@ Page({
         cur_year: newYear,
         cur_month: newMonth
       })
-      // console.log(newYear + "  " + newMonth);
+       console.log(newYear + "  " + newMonth+"prev");
     } else if (handle === 'current') {
       this.calculateEmptyGrids(this.data.year, this.data.month);
       this.calculateDays(this.data.year, this.data.month);
@@ -408,7 +431,7 @@ Page({
         cur_month: this.data.month
       })
 
-      // console.log(this.data.year + "  " + this.data.month);
+      console.log(this.data.year + "  " + this.data.month + 'current');
     } else {
       let newMonth = cur_month + 1;
       let newYear = cur_year;
@@ -424,7 +447,7 @@ Page({
         cur_month: newMonth
       })
 
-      // console.log(newYear + "  " + newMonth);
+       console.log(newYear + "  " + newMonth);
     }
   },
 
@@ -451,16 +474,11 @@ Page({
 
     // console.log(index);
   },
-  //积分兑现提醒
-  onFinish() {
-    this.setData({
-      tipShow: -1
-    })
-  },
+
   //活動規則
   onRule() {
     this.setData({
-      activityRule:1
+      activityRule: 1
     })
     // my.navigateTo({
     //   url: "../rules/rules"
@@ -496,10 +514,13 @@ Page({
     if (date == currentDate) {
       console.log("00000000000000000");
       my.httpRequest({
-        url: app.signInUrl + 'm=huifeng&c=index&a=sign_in&userid=chen123', // 签到
+        url: app.signInUrl + 'm=huifeng&c=index&a=sign_in&userid=' + app.userId, // 签到
         method: 'POST',
         success: (res) => {
           that.onGetSignUp(year, month);
+          that.setData({
+            tipShow:1
+          })
           my.showToast({
             content: "签到成功"
           });
@@ -511,16 +532,16 @@ Page({
 
   },
   //回到首页
-  onGoHome(){
-      var that = this;
-      that.setData({
-        tipShow:1
-      })
+  onGoHome() {
+    var that = this;
+    that.setData({
+      tipShow: -1
+    })
   },
   //活动规则隐藏
-  activityRuleFinish(){
+  activityRuleFinish() {
     this.setData({
-      activityRule:-1,
+      activityRule: -1,
 
     })
   },

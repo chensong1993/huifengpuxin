@@ -12,27 +12,35 @@
 
 .przie_main_content {
   width: 80%;
-  height: 100%;
+  height: auto;
   margin-left: 10%;
 }
 
-.prize_list_main {
-  height: auto;
-  width: 80%;
+.available_integral {
+  display: inline-block;
   position: absolute;
-  margin-top: 50%;
-  top: -35rpx;
+  top: 135rpx;
+  width: 200rpx;
+  font-size: 30rpx;
+  letter-spacing: 3rpx;
+  color: white;
+  text-align: center;
 }
 
-.prize_list {
-  margin: 5rpx 30rpx;
+.prize_list_main {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin-top: 50%;
+  top: 35rpx;
 }
 
 .prize_list_content {
+  height: 190rpx;
   border-radius: 15rpx;
   background: darkcyan;
-  height: 190rpx;
-  padding: 20rpx 0rpx 20rpx 20rpx;
+  margin: 10rpx 20rpx;
+  padding: 20rpx 0rpx 0rpx 20rpx;
   overflow: hidden;
   clear: both;
 }
@@ -43,45 +51,76 @@
   background: slateblue;
   font-size: 24rpx;
   padding: 3rpx 20rpx;
+  position: relative;
+  float: right;
   font-weight: bold;
   color: white;
+  margin-right: 88rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .prize_content {
-  margin-left: 200rpx;
-  margin-right: 68rpx;
   display: inline-block;
-  text-align: right;
+  margin-right: 300rpx;
   position: relative;
-  top: -30rpx;
+  width: 200rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
   font-size: 38rpx;
   font-weight: bold;
   color: white;
-  float: right;
 }
 
 .prize_date {
   display: inline-block;
   color: white;
+  margin-right: 68rpx;
   font-size: 24rpx;
   position: relative;
-  bottom: 0rpx;
-  float: left;
+  top: -50rpx;
+  right: -200rpx;
+  float: right;
+  padding-top: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .is_exchange {
   display: inline-block;
   color: white;
   width: 68rpx;
+  float: right;
   font-size: 29rpx;
   position: relative;
-  top: -184rpx;
-  float: right;
-  line-height: 233rpx;
-  height: 233rpx;
-  border-radius: 0 10rpx 10rpx 0;
+  top: -250rpx;
+  right: 0rpx;
+  text-align: center;
+  line-height: 250rpx;
+  height: 250rpx;
+  border-radius: 0 15rpx 15rpx 0;
   background: #f13968;
   font-weight: bold;
+}
+
+.need_points {
+  display: inline-block;
+  position: relative;
+  top: -90rpx;
+  right: 90rpx;
+  float: right;
+  color: white;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx white solid;
+  width: 230rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .scroll_view {
@@ -90,11 +129,124 @@
 
 .go_back {
   position: absolute;
-  bottom: 40rpx;
+  bottom: 50rpx;
   margin-left: 50%;
   left: -75rpx;
   display: inline-block;
   width: 150rpx;
   height: 40rpx;
   background: black;
+}
+
+/* 积分兑换成功 */
+
+.integral_success {
+  height: auto;
+  position: fixed;
+  z-index: 99;
+  margin-top: 50%;
+  top: -40rpx;
+  width: 70%;
+  text-align: center;
+  margin-left: 5%;
+
+}
+
+.redeem_ok_img {
+  height: 550rpx;
+  width: 526rpx;
+}
+
+.share_integral {
+  position: relative;
+  top: -210rpx;
+  border: none;
+  background: black;
+  width: 340rpx;
+  margin-left: 50%;
+  left: -170rpx;
+  height: 60rpx;
+}
+
+.share_integral::after {
+  border: none;
+}
+
+.share_integral_err {
+  position: relative;
+  top: -195rpx;
+  border: none;
+  background: black;
+  width: 340rpx;
+  margin-left: 50%;
+  left: -170rpx;
+  height: 60rpx;
+}
+
+.share_integral_err::after {
+  border: none;
+}
+
+.finish {
+  width: 100%;
+}
+
+.finish_text {
+  display: inline-block;
+  width: 140rpx;
+  background: black;
+  height: 60rpx;
+  top: -165rpx;
+  position: relative;
+  text-align: center;
+}
+
+.isRedeem_finish {
+  width: 100%;
+}
+
+.is_finish_text {
+  display: inline-block;
+  width: 200rpx;
+  background: black;
+  height: 60rpx;
+  top: -115rpx;
+  position: relative;
+  text-align: center;
+}
+.redeem_off{
+  position: relative;
+  text-align: center;
+  width: 72rpx;
+  height: 66rpx;
+}
+.barrier_bed{
+ height: 100%;
+  width: 100%;
+  background: black;
+  position: fixed;
+  z-index: 88;
+  opacity: 0.5;
+}
+.phone_content{
+  position: relative;
+  top: -300rpx;
+  border-radius: 40rpx;
+  border: 3rpx orange solid;
+  width: 340rpx;
+  margin-left: 50%;
+  left: -180rpx;
+  height: 60rpx;
+}
+.phone_finish{
+   width: 100%;
+}
+.phone_finish_text{
+  display: inline-block;
+  width: 200rpx;
+  background: black;
+  height: 60rpx;
+  top: -190rpx;
+  position: relative;
+  text-align: center;
 }

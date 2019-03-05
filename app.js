@@ -1,5 +1,6 @@
 App({
   signInUrl:"http://192.168.1.31/zhumin/ali_action/index.php?",
+  userId:"chen02",
   onLaunch(options) {
     // 第一次打开
     // options.query == {number:1}

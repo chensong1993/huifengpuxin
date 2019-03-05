@@ -1,11 +1,11 @@
 {
   "pages": [
-   
-     "pages/creditsExchange/creditsExchange",
+    
     "pages/index/index",
     "pages/calendar/calendar",
     "pages/rules/rules",
-     "pages/prize/prize"
+    "pages/prize/prize",
+    "pages/creditsExchange/creditsExchange"
     
   ],
   "window": {
