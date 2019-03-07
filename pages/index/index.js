@@ -113,14 +113,14 @@ Page({
     var signtype = e.target.dataset.signtype;
 
     //系统时间
-    var systemtime = Date.parse(that.data.dbCurrtime);
+    //var systemtime = Date.parse(that.data.dbCurrtime);
     day = (day < 10 ? "0" : "") + day
-    var currentTime = Date.parse(that.data.currentTimeZero + "-" + day);
-    var starttime = Date.parse(that.data.startTime);
-    var endtime = Date.parse(that.data.endTime);
+   // var currentTime = Date.parse(that.data.currentTimeZero + "-" + day);
+   // var starttime = Date.parse(that.data.startTime);
+   // var endtime = Date.parse(that.data.endTime);
     that.data.retroactiveTime = that.data.currentTimeZero + "-" + day;
     console.log(that.data.currentTimeZero + "-" + day + "   " + that.data.dates);
-    console.log(signtype);
+    console.log(signtype + "         EEEEEEEEEEEEEEEEEEEEEEEEEEEE");
     switch (signtype) {
       case 0:
         my.showToast({
@@ -128,61 +128,59 @@ Page({
         })
         break;
       case 1:
-        if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
-          if (that.data.useCart == 1) {
-            my.showToast({
-              content: "本月补签卡已用完"
-            })
-          } else {
-            console.log("进入签到器111111");
-            that.data.shareType == 1;
-            that.setData({
-              retroactiveTip: 1,
-              barrierbedShow: 1,
-              shareType: true
-            })
-          }
+        // if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
+        if (that.data.useCart == 1) {
+          my.showToast({
+            content: "本月补签卡已用完"
+          })
         } else {
-          if (currentTime == systemtime) {
-            my.showToast({
-              content: "不能补签当天"
-            })
-          } else {
-            my.showToast({
-              content: "不能补签当天以后的日期"
-            })
-          }
-
+          console.log("进入签到器111111");
+          that.setData({
+            retroactiveTip: 1,
+            barrierbedShow: 1,
+            shareType: true
+          })
         }
+        // } else {
+        //   if (currentTime == systemtime) {
+        //     my.showToast({
+        //       content: "不能补签当天"
+        //     })
+        //   } else {
+        //     my.showToast({
+        //       content: "不能补签当天以后的日期"
+        //     })
+        //   }
 
+        // }
         break;
       case 2:
-
-        if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
-          if (that.data.useCart == 1) {
-            my.showToast({
-              content: "本月补签卡已用完"
-            })
-          } else {
-            that.data.onRetroactiveTime == 1;
-            that.setData({
-              retroactiveTip: 1,
-              barrierbedShow: 1
-            })
-          }
-
+        //if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
+        if (that.data.useCart == 1) {
+          my.showToast({
+            content: "本月补签卡已用完"
+          })
         } else {
-          if (currentTime == systemtime) {
-            my.showToast({
-              content: "不能补签当天"
-            })
-          } else {
-            my.showToast({
-              content: "不能补签当天以后的日期"
-            })
-          }
+          console.log("进入签到器2222");
 
+          that.setData({
+            retroactiveTip: 1,
+            barrierbedShow: 1,
+            shareType: true
+          })
         }
+        // } else {
+        //   if (currentTime == systemtime) {
+        //     my.showToast({
+        //       content: "不能补签当天"
+        //     })
+        //   } else {
+        //     my.showToast({
+        //       content: "不能补签当天以后的日期"
+        //     })
+        //   }
+
+        // }
 
         break;
       case 3:
@@ -363,7 +361,7 @@ Page({
         var siginin = [];
         var obj;
         for (var k = 0; k < lists.length; k++) {
-          console.log(lists[k].type);
+          console.log(lists[k].type + "    rrrrrrrrrrrrrrrrrrrrr");
           if (lists[k].type == "4") {
             obj = {
               signList: lists[k].time,
@@ -398,7 +396,7 @@ Page({
           for (var j = 0; j < daysArr.length; j++) {
             for (var i = 0; i < siginin.length; i++) {
               if (daysArr[j].date == siginin[i].signList) {
-                console.log(siginin[i].signList + "  0000000");
+                console.log(siginin[i].type + "  0000000");
                 daysArr[j].type = siginin[i].type;
 
                 my.hideLoading();
@@ -640,8 +638,6 @@ Page({
   },
   onShareAppMessage(e) {
     var that = this;
-
-
     console.log(that.data.shareType);
     //判断点击日期直接补签
     if (that.data.shareType == true) {
@@ -649,21 +645,69 @@ Page({
         url: app.signInUrl + 'm=huifeng&c=index&a=use_retroactive_card&userid=' + app.userId + '&retroactive_time=' + that.data.retroactiveTime,
         method: 'POST',
         success(res) {
-          if (res.state != "200") {
-            console.log("use_retroactive_card");
-            that.onGetSignUp(that.data.year, that.data.month);
-            that.setData({
-              retroactiveTime: that.data.retroactiveTime,
-              retroactiveTip: -1,
-              retroactiveOk: 1,
-              barrierbedShow: 1,
-            })
-            that.onRetroactiveNumber();
-          } else {
-            my.showToast({
-              content: '无补签卡'
-            });
+          console.log(res.data.state);
+          switch (res.data.state) {
+            case 200:
+              that.onGetSignUp(that.data.cur_year, that.data.cur_month);
+              that.setData({
+                retroactiveTime: that.data.retroactiveTime,
+                retroactiveTip: -1,
+                retroactiveOk: 1,
+                barrierbedShow: 1,
+              })
+              break;
+            case 202:
+              my.showToast({
+                content: '不能签到今天'
+              })
+              break;
+            case 203:
+              my.showToast({
+                content: '该日不能补签'
+              })
+              break;
+            case 204:
+              my.showToast({
+                content: '无补签卡'
+              })
+              break;
+            case 205:
+              my.showToast({
+                content: '已经签到不能补签'
+              })
+              break;
+            case 403:
+              my.showToast({
+                content: '活动没开始'
+              })
+              break;
+            case 402:
+              my.showToast({
+                content: '用户信息有误'
+              })
+              break;
+            default:
+              my.showToast({
+                content: '补签失败'
+              })
+              break;
           }
+          // if (res.data.state == "200") {
+          //   console.log("use_retroactive_card");
+          //   that.onGetSignUp(that.data.cur_year, that.data.cur_month);
+          //   that.setData({
+          //     retroactiveTime: that.data.retroactiveTime,
+          //     retroactiveTip: -1,
+          //     retroactiveOk: 1,
+          //     barrierbedShow: 1,
+          //   })
+          //    console.log(that.data.year+"          "+ that.data.month);
+          // //  that.onRetroactiveNumber();
+          // } else {
+          //   my.showToast({
+          //     content: '无补签卡'
+          //   });
+          // }
 
         }, fail() {
           console.log("shareerr");
