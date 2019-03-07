@@ -3,7 +3,7 @@
 <view class='all'>
   <!-- 显示星期 -->
   <view class="week_main">
-    <view class="week" a:for="{{weeks_ch}}" a:key="{{index}}" data-idx="{{index}}">{{item}}            
+    <view class="week" a:for="{{weeks_ch}}" a:key="{{index}}" data-idx="{{index}}">{{item}}                
     </view>
   </view>
   <view class="day_main">
@@ -22,11 +22,11 @@
               <!-- 每个月份的有数字的单元格 -->
               <view class='cell' style="height: {{modelHeight}}rpx;" a:else>
                 <!-- 特殊签到 -->
-                <view  onTap="onNotSignin" data-clickdate="{{days[j+k].date}}" data-signtype="{{days[j+k].type}}" class='cell'>
-                  <image src="{{dateImg.typeColor(days[j+k].type)}}" class="dateImg" />
-                  <text class="cell_text">{{days[j+k].date}}                                                      
+                <view onTap="onNotSignin" data-clickdate="{{days[j+k].date}}" data-signtype="{{days[j+k].type}}" class='cell'>
+                  <image src="{{dateImg.typeColor(days[j+k].type)}}" class="dateImg" a:if="{{days[j+k].type==2}}" style="z-index:100"/>
+                  <image src="{{dateImg.typeColor(days[j+k].type)}}" class="dateImg" a:else />
+                  <text class="cell_text">{{days[j+k].date}}                                                                        
                   </text>
-                  
                 </view>
               </view>
             </view>

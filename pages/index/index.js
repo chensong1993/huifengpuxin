@@ -27,7 +27,8 @@ Page({
             tipTop: '75',
             tipCloseBottom: '215',
             activityRuleBottom: '200',
-            specialXTop: '385'
+            specialXTop: '385',
+            retroactiveTop: '40'
           })
         }
         console.log(res.model);
@@ -64,27 +65,52 @@ Page({
       }
     });
 
+    that.onRetroactiveNumber();
 
+  },
+  //获取补签卡数量
+  onRetroactiveNumber() {
+    var that = this;
+    var cartTotal;
+    var useCart;
+    my.httpRequest({
+      url: app.signInUrl + 'm=huifeng&c=index&a=get_retroactive_card&userid=' + app.userId, // 获取补签卡使用数量
+      success: (res) => {
+        cartTotal = res.data.data.cart_total_number;
+        useCart = res.data.data.use_cart_number;
+        that.setData({
+          cartTotal: cartTotal,
+          useCart: useCart
+        })
+      },
+    });
 
   },
   //特殊日签到成功提醒
   onSpecialDayShow() {
-    specialdayShow: -1
+    var that = this;
+    that.setData({
+      specialdayShow: -1,
+      barrierbedShow: -1
+    })
+
+
+  },
+  //签到成功
+  onRetroactiveHome() {
+    var that = this;
+    that.setData({
+      retroactiveOk: -1,
+      retroactiveTip: -1,
+      barrierbedShow: -1
+    })
   },
   //补签
   onNotSignin(e) {
     var that = this;
+    that.onRetroactiveNumber();
     var day = e.target.dataset.clickdate;
     var signtype = e.target.dataset.signtype;
-    // my.httpRequest({
-    //   url: app.signInUrl + 'm=huifeng&c=index&a=use_retroactive_card&retroactive_time=2019-02-28&userid=chen123',
-    //   method: 'POST',
-    //   success(res) {
-    //     console.log(res.data.data.state);
-    //   }, fail() {
-
-    //   }
-    // })
 
     //系统时间
     var systemtime = Date.parse(that.data.dbCurrtime);
@@ -92,6 +118,7 @@ Page({
     var currentTime = Date.parse(that.data.currentTimeZero + "-" + day);
     var starttime = Date.parse(that.data.startTime);
     var endtime = Date.parse(that.data.endTime);
+    that.data.retroactiveTime = that.data.currentTimeZero + "-" + day;
     console.log(that.data.currentTimeZero + "-" + day + "   " + that.data.dates);
     console.log(signtype);
     switch (signtype) {
@@ -101,14 +128,20 @@ Page({
         })
         break;
       case 1:
-
-        // if (starttime<=currentTime) {
-        //   if (currentTime <= endtime) {
-        console.log("进入签到器");
         if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
-          my.showToast({
-            content: "ok"
-          })
+          if (that.data.useCart == 1) {
+            my.showToast({
+              content: "本月补签卡已用完"
+            })
+          } else {
+            console.log("进入签到器111111");
+            that.data.shareType == 1;
+            that.setData({
+              retroactiveTip: 1,
+              barrierbedShow: 1,
+              shareType: true
+            })
+          }
         } else {
           if (currentTime == systemtime) {
             my.showToast({
@@ -116,22 +149,41 @@ Page({
             })
           } else {
             my.showToast({
-              content: "不能补签未来"
+              content: "不能补签当天以后的日期"
             })
           }
 
-          //   }
-          // }
-
-
         }
-
 
         break;
       case 2:
-        my.showToast({
-          content: "该日为活动日"
-        })
+
+        if ((starttime <= currentTime <= endtime) && currentTime < systemtime) {
+          if (that.data.useCart == 1) {
+            my.showToast({
+              content: "本月补签卡已用完"
+            })
+          } else {
+            that.data.onRetroactiveTime == 1;
+            that.setData({
+              retroactiveTip: 1,
+              barrierbedShow: 1
+            })
+          }
+
+        } else {
+          if (currentTime == systemtime) {
+            my.showToast({
+              content: "不能补签当天"
+            })
+          } else {
+            my.showToast({
+              content: "不能补签当天以后的日期"
+            })
+          }
+
+        }
+
         break;
       case 3:
         my.showToast({
@@ -159,7 +211,7 @@ Page({
     //   })
     // }
 
-    console.log(day);
+    console.log(that.data.shareType);
   },
   // 获取当月共多少天
   getThisMonthDays: function (year, month) {
@@ -250,7 +302,7 @@ Page({
     var currentTime = year + "-" + month;
     that.data.currentyear = year;
     that.data.currentmonth = month;
-    
+
     //补签时间引用
     var currentTimeZero = year + "-" + (month < 10 ? "0" : "") + month;
     that.data.currentTimeZero = currentTimeZero;
@@ -276,7 +328,7 @@ Page({
         signList = res.data.data;
         //积分
         that.setData({
-          score:signList.score
+          score: signList.score
         })
         // lists= res.data.data.date;
         current = new Date(signList.date.replace(/-/g, "/"));
@@ -318,7 +370,7 @@ Page({
               type: 4
             }
             console.log("444");
-              siginin.push(obj);
+            siginin.push(obj);
           }
           if (lists[k].type == "3") {
             obj = {
@@ -326,7 +378,7 @@ Page({
               type: 3
             }
             console.log("33333");
-              siginin.push(obj);
+            siginin.push(obj);
           }
           if (lists[k].type == "2") {
             obj = {
@@ -336,26 +388,27 @@ Page({
             siginin.push(obj);
             console.log("2222");
           }
-          
-         
+
+
         }
-         
-        console.log(year+'   '+that.data.cur_year+'  '+month+  +that.data.cur_month);
+
+        console.log(year + '   ' + that.data.cur_year + '  ' + month + +that.data.cur_month);
         if (year == that.data.cur_year && month == that.data.cur_month) {
 
           for (var j = 0; j < daysArr.length; j++) {
             for (var i = 0; i < siginin.length; i++) {
               if (daysArr[j].date == siginin[i].signList) {
-                console.log( siginin[i].signList+"  0000000");
+                console.log(siginin[i].signList + "  0000000");
                 daysArr[j].type = siginin[i].type;
+
                 my.hideLoading();
-              
+
               }
- //console.log(siginin[i].type);
+              //console.log(siginin[i].type);
             }
-            console.log(daysArr[j].date);
+            // console.log(daysArr[j].date);
           }
-          
+
           that.setData({
             days: daysArr
           });
@@ -421,7 +474,7 @@ Page({
         cur_year: newYear,
         cur_month: newMonth
       })
-       console.log(newYear + "  " + newMonth+"prev");
+      console.log(newYear + "  " + newMonth + "prev");
     } else if (handle === 'current') {
       this.calculateEmptyGrids(this.data.year, this.data.month);
       this.calculateDays(this.data.year, this.data.month);
@@ -447,7 +500,7 @@ Page({
         cur_month: newMonth
       })
 
-       console.log(newYear + "  " + newMonth);
+      console.log(newYear + "  " + newMonth);
     }
   },
 
@@ -488,7 +541,8 @@ Page({
   onTipClose(e) {
     var that = this;
     that.setData({
-      tipShow: -1
+      tipShow: -1,
+      barrierbedShow: -1
     })
   },
   //奖品查询
@@ -518,9 +572,19 @@ Page({
         method: 'POST',
         success: (res) => {
           that.onGetSignUp(year, month);
-          that.setData({
-            tipShow:1
-          })
+          if (res.data.data.sign_status == 2) {
+            that.setData({
+              specialdayShow: 1,
+              barrierbedShow: 1
+
+            })
+          } else {
+            that.setData({
+              tipShow: 1,
+              barrierbedShow: 1
+            })
+          }
+
           my.showToast({
             content: "签到成功"
           });
@@ -535,7 +599,8 @@ Page({
   onGoHome() {
     var that = this;
     that.setData({
-      tipShow: -1
+      tipShow: -1,
+      barrierbedShow: -1
     })
   },
   //活动规则隐藏
@@ -553,7 +618,10 @@ Page({
   },
 
   onShow() {
+    var that = this;
     // 页面显示
+    that.onGetSignUp(that.data.year, that.data.month);
+    console.log(123)
   },
   onHide() {
     // 页面隐藏
@@ -571,18 +639,63 @@ Page({
     // 页面被拉到底部
   },
   onShareAppMessage(e) {
+    var that = this;
+
+
+    console.log(that.data.shareType);
+    //判断点击日期直接补签
+    if (that.data.shareType == true) {
+      my.httpRequest({
+        url: app.signInUrl + 'm=huifeng&c=index&a=use_retroactive_card&userid=' + app.userId + '&retroactive_time=' + that.data.retroactiveTime,
+        method: 'POST',
+        success(res) {
+          if (res.state != "200") {
+            console.log("use_retroactive_card");
+            that.onGetSignUp(that.data.year, that.data.month);
+            that.setData({
+              retroactiveTime: that.data.retroactiveTime,
+              retroactiveTip: -1,
+              retroactiveOk: 1,
+              barrierbedShow: 1,
+            })
+            that.onRetroactiveNumber();
+          } else {
+            my.showToast({
+              content: '无补签卡'
+            });
+          }
+
+        }, fail() {
+          console.log("shareerr");
+        }
+      })
+    } else {
+      my.httpRequest({
+        url: app.signInUrl + 'm=huifeng&c=index&a=share&userid=' + app.userId, // 分享de积分
+        method: 'POST',
+        success: (res) => {
+          that.setData({
+            score: res.data.data.total_score
+          })
+
+          console.log(res.data.data.total_score);
+        },
+      });
+    }
 
     return {
       title: 'My App',
       desc: 'My App description',
       path: 'pages/index/index',
       success() {
+
         console.log("okokokokokokokokokok");
       },
       fail() {
         console.log("errrrrr");
       }
     };
+
   },
 
 });

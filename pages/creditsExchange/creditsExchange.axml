@@ -2,60 +2,53 @@
 <view class="prize_main">
   <image class="redeem_prize_img" src="../../image/redeem_prize.png" />
   <view class="przie_main_content">
-       <!-- 积分s是否兑换提醒 -->
-    <view class="integral_success" style=" top: {{xRedeemTop}}rpx;" a:if="{{condition}}">
-      <image class="redeem_ok_img" src="../../image/is_redeem.png"  />
-     
+    <!-- 积分s是否兑换提醒 -->
+    <view class="integral_success" style=" top: {{xRedeemTop}}rpx;" a:if="{{isCondition==1}}">
+      <image class="redeem_ok_img" src="../../image/is_redeem.png" />
       <view class="isRedeem_finish" onTap="onisRedeem">
-        <text class="is_finish_text"></text>  
+        <text class="is_finish_text">
+        </text>
       </view>
-      <image src="../../image/close_tip.png" class="redeem_off" /> 
+      <image src="../../image/close_tip.png" class="redeem_off" onTap="onFinish"/>
     </view>
-      <!-- 积分兑换成功提醒 -->
-    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
-      <image class="redeem_ok_img" src="../../image/redeem_ok.png"  />
-      
-      <button class="share_integral" open-type="share">                                                                                  
+    <!-- 积分兑换成功提醒 -->
+    <view class="integral_success" style=" top: {{xRedeemTop}}rpx;" a:if="{{isCondition==2}}">
+      <image class="redeem_ok_img" src="../../image/redeem_ok.png" />
+      <button class="share_integral" open-type="share">
       </button>
       <view class="finish" onTap="onFinish">
-        <text class="finish_text"></text>  
+        <text class="finish_text">
+        </text>
       </view>
     </view>
     <!-- 积分兑换失败提醒 -->
-    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
-      <image class="redeem_ok_img" src="../../image/redeem_err.png"  />
-      
-      <button class="share_integral_err" open-type="share">                                                                                  
+    <view class="integral_success" style=" top: {{xRedeemTop}}rpx;" a:if="{{isCondition==0}}">
+      <image class="redeem_ok_img" src="../../image/redeem_err.png" />
+      <button class="share_integral_err" open-type="share">
       </button>
       <view class="finish" onTap="onFinish">
-        <text class="finish_text"></text>  
+        <text class="finish_text">
+        </text>
       </view>
     </view>
-    <!-- 输入手机号提醒 -->
-    <view class="integral_success"  style=" top: {{xRedeemTop}}rpx;">
-      <image class="redeem_ok_img" src="../../image/phone_number.png"  />
-      
-      <input class="phone_content" type="number" maxlength="11" focus='true'>                                                                              
-      </input>
-      <view class="phone_finish" onTap="onSubmitPhoneNum">
-        <text class="phone_finish_text"></text>  
-      </view>
-    </view>
-    <text class="available_integral" style="top: {{availableIntegral}}rpx;">12345</text>
+   
+    <text class="available_integral" style="top: {{availableIntegral}}rpx;">{{score}}
+    </text>
     <view class="prize_list_main" style=" top: {{prizeListTop}}rpx;">
       <scroll-view class="scroll_view" style="height: {{xScrollViewHeight}}rpx;" scroll-y="{{true}}" onScrollToUpper="upper" onScrollToLower="lower" onScroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-        <block a:for="{{6}}">
+        <block a:for="{{creditsList}}">
           <view class="prize_list_content">
-            <text class="prize_state">剩余{{100}}份                                                                                                          
+            <text class="prize_state">剩余{{item.number}}份                                                                                                                      
             </text>
-            <text class="prize_content">话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费  话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费  话费券话费券话费券话费  话费券话费话费券话费 话费券话费券话费券话费 话费券话费券话费券话费                                                                                                      
+            <text class="prize_content">{{item.name}}                                                                                                               
             </text>
-            <text class="need_points">需要积分：{{100000000000}}
+            <text class="need_points">需要积分：{{item.score}}            
             </text>
-            <text class="prize_date">获取时间：2019.09.12                                                                                                          
+            <text class="prize_date">兑换时间：{{item.starttime}}                                                                                                                    
             </text>
-            
-            <text class="is_exchange">兑换              
+            <text class="is_exchange" onTap="showDuihan" data-prizeid="{{item.id}}" a:if="{{item.exchange_status==true}}">兑换                          
+            </text>
+            <text class="is_exchange" data-prizeid="{{item.id}}" style="background: #666;" a:else>兑换                          
             </text>
           </view>
         </block>
@@ -67,4 +60,5 @@
 </view>
 </view>
 </view>
-<view class="barrier_bed"></view>
+<view class="barrier_bed" a:if="{{barrierbedShow==1}}">
+</view>

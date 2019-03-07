@@ -240,7 +240,7 @@
   background: #234883;
   width: 500rpx;
   height: 66rpx;
-  line-height: 66rpx;
+  line-height: 74rpx;
   text-align: center;
   border-radius: 25rpx;
   font-size: 30rpx;
@@ -400,7 +400,7 @@
   background: #666;
   width: 500rpx;
   height: 66rpx;
-  line-height: 66rpx;
+  line-height: 74rpx;
   text-align: center;
   border-radius: 25rpx;
   font-size: 30rpx;
@@ -474,5 +474,87 @@
 }
 
 .special_day_share::after {
- border: none;
+  border: none;
+}
+
+/* 补签提醒 */
+
+.retroactive {
+  height: 574rpx;
+  width: 647rpx;
+  position: fixed;
+  z-index: 99;
+  margin-top: 50%;
+  top: -65rpx;
+  text-align: center;
+  clear: both;
+  overflow: hidden;
+}
+
+.retroactive_img {
+  height: 574rpx;
+  width: 647rpx;
+}
+
+.retroactive_number {
+  position: relative;
+  display: inline-block;
+  top: -400rpx;
+  text-align: center;
+  font-size: 34rpx;
+  color: #162947;
+  height: 60rpx;
+  font-weight: bold;
+}
+
+.share_retroactive {
+  position: relative;
+  border: none;
+  width: 150rpx;
+  bottom: 125rpx;
+  right: 135rpx;
+  float: right;
+  background: transparent;
+  height: 60rpx;
+}
+
+.share_retroactive::after {
+  border: none;
+}
+
+.finish_text {
+  display: inline-block;
+  position: relative;
+  border: none;
+  width: 150rpx;
+  bottom: 125rpx;
+  float: left;
+  left: 110rpx;
+  height: 60rpx;
+}
+
+/* 补签成功 */
+
+.retroactive_number_ok {
+  position: relative;
+  display: inline-block;
+  top: -400rpx;
+  text-align: center;
+  font-size: 34rpx;
+  color: #162947;
+  height: 60rpx;
+  font-weight: bold;
+}
+
+.finish_retroactive {
+  width: 647rpx;
+  text-align: center;
+}
+
+.finish_text_ok {
+  display: inline-block;
+  width: 150rpx;
+  height: 60rpx;
+  position: relative;
+  bottom: 175rpx;
 }

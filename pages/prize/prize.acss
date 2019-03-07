@@ -91,13 +91,19 @@
 .prize_content {
   margin-left: 200rpx;
   display: inline-block;
+  top: -30rpx;
+  height:130rpx;
+  width: 250rpx;
   text-align: right;
   position: relative;
-  top: -30rpx;
   font-size: 38rpx;
   font-weight: bold;
   color: white;
   float: right;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
+  overflow: hidden;
 }
 
 .prize_date {
@@ -105,10 +111,73 @@
   color: white;
   font-size: 24rpx;
   position: relative;
-  bottom: 0rpx;
   float: left;
+  left: 0;
+  bottom: 0rpx;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.prize_use_date {
+  display: inline-block;
+  color: white;
+  font-size: 24rpx;
+  position: relative;
+  float: left;
+  left: -232rpx;
+  bottom: 35rpx;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .scroll_view {
   height: 675rpx;
+}
+
+.integral_success {
+  height: auto;
+  position: fixed;
+  z-index: 999;
+  margin-top: 50%;
+  top: -40rpx;
+  width: 70%;
+  text-align: center;
+  margin-left: 15%;
+  
+}
+
+.redeem_ok_img {
+  height: 550rpx;
+  width: 526rpx;
+}
+.phone_content {
+  position: relative;
+  top: -300rpx;
+  border-radius: 40rpx;
+  border: 3rpx orange solid;
+  width: 340rpx;
+  margin-left: 50%;
+  left: -180rpx;
+  height: 60rpx;
+}
+
+.phone_finish {
+  width: 100%;
+}
+
+.phone_finish_text {
+  display: inline-block;
+  width: 200rpx;
+  height: 60rpx;
+  top: -190rpx;
+  position: relative;
+  text-align: center;
+}
+.barrier_bed {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: fixed;
+  z-index: 88;
+  opacity: 0.5;
 }

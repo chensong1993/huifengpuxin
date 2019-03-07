@@ -7,7 +7,7 @@
   <!-- 特殊日签到弹窗提醒 -->
   <view class="special_day_main" a:if="{{specialdayShow==1}}">
     <image class="special_day_img" src="../../image/special_day.png" />
-    <text class="special_day_j" style=" top: {{specialXTop}}rpx;">100积分    
+    <text class="special_day_j" style=" top: {{specialXTop}}rpx;">100积分                
     </text>
     <text class="special_day_ok" onTap="onSpecialDayShow">
     </text>
@@ -18,7 +18,7 @@
   <view class="mian_content">
     <view class="integral_plate">
       <image class="integralplate_img" src="../../image/integral_plate.png" />
-      <text class="integralplate_text">{{score}}                      
+      <text class="integralplate_text">{{score}}                                        
       </text>
     </view>
     <view class="rule" style="top:{{ruleXHeight}}rpx;" onTap="onRule">
@@ -26,14 +26,15 @@
       <!-- <text class="text_rule"> 活动规则                                                                                        
       </text> -->
     </view>
-    <view class="click_sign" style="bottom:{{signXHeight}}rpx;" a:if="{{SignOk==false}}">
-      <text class="click_sign_text" onTap="onSignIn">点击签到                                                                                                                              
+    <view class="click_sign" style="bottom:{{signXHeight}}rpx;" a:if="{{SignOk==true}}">
+      <text class="click_is_sign_text">今日已签到                                                                                                                                                
       </text>
     </view>
     <view class="click_sign" style="bottom:{{signXHeight}}rpx;" a:else>
-      <text class="click_is_sign_text">今日已签到                                                                                                                              
+      <text class="click_sign_text" onTap="onSignIn">点击签到                                                                                                                                                
       </text>
     </view>
+    
     <view class="prize" style="bottom:{{prizeXHeight}}rpx;" onTap="onPrizeQuery">
       <image class="img_prize" src="../../image/pirze_03.png" />
       <!-- <text class="text_prize">奖品查询                                                                                         
@@ -54,10 +55,10 @@
         <view class="tip_title">
           <!-- <text class="tip_left">签到积分:                                                                                                                                                      
           </text> -->
-          <text class="tip_right">积分+20                                                                                                                                                                                                  
+          <text class="tip_right">积分+10                                                                                                                                                                                                                                
           </text>
         </view>
-        <view class="tip_rule">分享可得5积分                                                                                                                                                            
+        <view class="tip_rule">分享可得15积分                                                                                                                                                                                    
         </view>
         <!-- <view class="tip_rule_b">> > > > > > > ></view><view class="caifu">《汇丰晋信财富号》                                                                                                                
         </view><view class="caifu_d">实例解读，为您洞见先机。                                                                                                                
@@ -78,6 +79,26 @@
     </view>
     <!-- 提示积分分享关闭按钮 -->
     <image class="tip_close" a:if="{{tipShow==1}}" style="bottom:{{tipCloseBottom}}rpx" onTap="onTipClose" src="../../image/close_tip.png"/>
+    <!-- 补签提醒 -->
+    <view class="retroactive" style=" top: {{retroactiveTop}}rpx;" a:if="{{retroactiveTip==1}}">
+      <image class="retroactive_img" src="../../image/retroactive_03.png" />
+      <text class="retroactive_number">已补签{{useCart}}/{{cartTotal}}      
+      </text>
+      <text class="finish_text" onTap="onRetroactiveHome">
+      </text>
+      <button class="share_retroactive" open-type="share">
+      </button>
+    </view>
+    <!-- 补签成功 -->
+    <view class="retroactive" style=" top: {{retroactiveTop}}rpx;" a:if="{{retroactiveOk==1}}">
+    <image class="retroactive_img" src="../../image/retroactive_ok_03.png" />
+    <text class="retroactive_number_ok">补签日{{retroactiveTime}}                
+    </text>
+    <view class="finish_retroactive" onTap="onRetroactiveHome">
+      <text class="finish_text_ok" onTap="onRetroactiveHome">
+        </view>
+      </text>
+    </view>
   
   </view>
   <!-- 日历节点 -->
@@ -86,13 +107,13 @@
       <view class="calendar">
         <view class="sign_in">
           <image class="sign_img" src="../../image/duihao.png" />
-          <text class="sign_day">已连续签到{{signTotalDay}}日                                                                                                                                                                                                                                                                                                                      
+          <text class="sign_day">已连续签到{{signTotalDay}}日                                                                                                                                                                                                                                                                                                                                                    
           </text>
         </view>
         <view class="sign_year">
           <image class="date_img" src="../../image/duihao_07.png" />
           <!-- <text class="dian"></text><text class="line"></text> -->
-          <text class="year">{{cur_year||"--"}}年{{cur_month||"--"}}月                                                                                                                                                                                                                                                                                                     
+          <text class="year">{{cur_year||"--"}}年{{cur_month||"--"}}月                                                                                                                                                                                                                                                                                                                                   
           </text>
         </view>
         <swiper class="swiper_signins" indicator-dots="{{indicatorDots}}" acceleration="true" autoplay="{{autoplay}}" current="{{currindex}}" interval="{{1000}}" onChange="intervalChange" data-handle="prev" duration="{{duration}}">
@@ -112,4 +133,4 @@
   <!-- 日历节点 -->
 </view>
 <!-- 提示蒙层 -->
-<view class="tip_zz" a:if="{{tipShow==1}}"/>
+<view class="tip_zz"  a:if="{{barrierbedShow==1}}"/>

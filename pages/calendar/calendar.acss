@@ -57,7 +57,7 @@
 .cell_text{
   display: inline-block;
   position: relative;
-  z-index: 999;
+  z-index: 99;
 }
 .dateImg {
   margin-top:-2rpx;
